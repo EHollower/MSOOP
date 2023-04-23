@@ -4,55 +4,78 @@
 #include <vector>
 #include <random>
 #include <chrono>
+#include <queue>
 
 #include <SFML/Graphics.hpp>
 
 class Cell { // handles the cells information throughout the hole game (more of a getter/setter class)
 private:
-    int nearMines;
-    bool isFlagged, hasMine, isUncovered;
+    int nr_mines;
+    bool flagged, mine, uncovered;
 public:
-    Cell(): nearMines(0),
-            isFlagged(false), hasMine(false), isUncovered(false) {
+    Cell(): nr_mines(0),
+            flagged(false), mine(false), uncovered(true) {
     }
 
     void flagCell() {
-        isFlagged = !isFlagged;
+        flagged = !flagged;
     }
 
     void setMine() {
-        hasMine = true;
+        mine = true;
     }
 
-    void setNumberMines(int _nr) {
-        nearMines = _nr;
+    void set_nr_mines(const int& _nr) {
+        nr_mines = _nr;
     }
 
     void uncoverCell() {
-        isUncovered = false;
+        uncovered = false;
     }
 
-    [[nodiscard]] bool containsMine() const {
-        return hasMine;
+    [[nodiscard]] bool isUncovered() const {
+        return uncovered;
+    }
+
+    [[nodiscard]] bool hasMine() const {
+        return mine;
+    }
+
+    [[nodiscard]] bool hasFlag() const {
+        return flagged;
+    }
+
+    [[nodiscard]] int number_of_Mines() const {
+        return nr_mines;
+    }
+
+    bool operator == (const Cell& other) const { // for the dfs function
+        return uncovered == other.uncovered;
     }
 
     friend std::ostream& operator << (std::ostream& stream, const Cell& cell) {
-        if (!cell.isUncovered) {
+        if (cell.hasFlag()) {
+            stream << "F";
+            return stream;
+        }
+
+        if (cell.isUncovered()) {
             stream << "#";
             return stream;
         }
 
-        if (!cell.nearMines) {
+        if (!cell.hasMine()) {
             stream << ".";
             return stream;
         }
 
-        stream << cell.nearMines;
+        stream << cell.nr_mines;
         return stream;
     }
 
     ~Cell() = default;
 };
+
 
 class GameBoard { // The Game Board of MineSweeper
 private:
@@ -84,7 +107,7 @@ public:
         std::mt19937 game_seed(std::chrono::steady_clock::now().time_since_epoch().count());
         for (int i = 0; i < nr_mines; ++i) {
             auto [row, col] = gen_mine(game_seed);
-            if (board[row][col].containsMine()) { // we already have a mine in this cell
+            if (board[row][col].hasMine()) { // we already have a mine in this cell
                 --i;
                 continue;
             }
@@ -93,20 +116,65 @@ public:
 
         for (int i = 0; i < rows; ++i)
             for (int j = 0; j < columns; ++j) {
-                if (board[i][j].containsMine())
+                if (board[i][j].hasMine())
                     continue;
 
                 int near_mines = 0;
                 for (int d = 0; d < 8; ++d) {
                     if (check_border(i + dir_row[d], j + dir_col[d])) {
-                        near_mines += (board[i + dir_row[d]][j + dir_col[d]].containsMine());
+                        near_mines += (board[i + dir_row[d]][j + dir_col[d]].hasMine());
                     }
                 }
 
                 if (near_mines != 0) {
-                    board[i][j].setNumberMines(near_mines);
+                    board[i][j].set_nr_mines(near_mines);
                 }
             }
+    }
+
+    void bfs(const int& row, const int& col) { // reveal cells till we find a mine / cell that have mines near them
+        std::queue <std::pair <int, int>> q;
+        q.emplace(row, col);
+
+        while (!q.empty()) {
+            auto& [x, y] = q.front();
+            q.pop();
+
+            if (board[x][y].hasMine() or board[x][y].hasFlag() or !board[x][y].isUncovered()) {
+                continue;
+            }
+
+            if (board[x][y].number_of_Mines() != 0) {
+                board[x][y].uncoverCell();
+                continue;
+            }
+
+            board[x][y].uncoverCell();
+            for (int d = 0; d < 8; ++d) {
+                int tmp_x = x + dir_row[d];
+                int tmp_y = y + dir_col[d];
+                if (check_border(tmp_x, tmp_y) and board[tmp_x][tmp_y].isUncovered()) {
+                    q.emplace(tmp_x, tmp_y);
+                }
+            }
+        }
+    }
+
+    bool reveal_cell(const int& row, const int& col) { // reveal cell/s
+        if (board[row][col].hasMine()) {
+            std::cout << "In";
+            return false;
+        }
+        bfs(row, col);
+        return true;
+    }
+
+    [[nodiscard]] int number_mines() const {
+        return nr_mines;
+    }
+
+    void putFlag(const int& row, const int& col) {
+        board[row][col].flagCell();
     }
 
     friend std::ostream& operator << (std::ostream& stream, const GameBoard& MineSweeper) {
@@ -119,16 +187,30 @@ public:
     ~GameBoard() = default;
 };
 
-class Player {
+/*
+class GameWindow {
 private:
-    GameBoard board;
-    int nr_flags;
+    sf::RenderWindow app;
+    void create_window() {
+        app.create(sf::VideoMode(800, 600), "Minesweeper!");
+    }
 public:
+    GameWindow() {
+        create_window();
+    }
 };
+*/
 
 int main() {
-    GameBoard MineSweeper;
-    MineSweeper.gen_game();
-    std::cout << MineSweeper;
+    /* test */
+    GameBoard board;
+    int nr_flags = board.number_mines();
+    board.gen_game();
+    board.putFlag(5, 5);
+    --nr_flags;
+    if (!board.reveal_cell(1, 1)) {
+        std::cout << "Mina";
+    }
+    std::cout << board;
     return 0;
 }
