@@ -54,6 +54,7 @@ public:
     bool operator == (const Cell& other) const = default;
 
     void clearCell() {
+        nr_mines = 0;
         FLAGGED = MINE = false;
         COVERED = true;
     }
@@ -69,8 +70,8 @@ public:
             return stream;
         }
 
-        if (!cell.isMine()) {
-            stream << ".";
+        if (cell.isMine()) {
+            stream << "M";
             return stream;
         }
 
@@ -198,8 +199,8 @@ private:
         return std::make_pair(x, y);
     }
 
-    [[nodiscard]] bool check_border(int x, int y) const { // check if the position (x, y) is inside the board
-        return x >= 0 and x < rows and y >= 0 and y < columns;
+    [[nodiscard]] bool check_border(const int& x, const int& y) const { // check if the position (x, y) is inside the board
+        return (x >= 0 and x < rows and y >= 0 and y < columns);
     }
 
 public:
@@ -233,7 +234,7 @@ public:
                 int near_mines = 0;
                 for (int d = 0; d < 8; ++d) {
                     if (check_border(i + dir_row[d], j + dir_col[d])) {
-                        near_mines += (board[i + dir_row[d]][j + dir_col[d]].isMine());
+                        near_mines += board[i + dir_row[d]][j + dir_col[d]].isMine();
                     }
                 }
 
