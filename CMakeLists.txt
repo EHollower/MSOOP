@@ -139,6 +139,7 @@ endif()
 ###############################################################################
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+install (DIRECTORY assets DESTINATION bin)
 
 
 # copy binaries to "bin" folder; these are uploaded as artifacts on each release
