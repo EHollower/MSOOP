@@ -93,7 +93,7 @@ endif()
 ###############################################################################
 
 # NOTE: update executable name in .github/workflows/cmake.yml:25 when changing name here
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp headers/Cell.h src/Cell.cpp headers/GameTextures.h src/GameTextures.cpp headers/GameBoard.h src/GameBoard.cpp headers/WindowManager.h src/WindowManager.cpp headers/Game.h src/Game.cpp headers/Smiley.h src/Smiley.cpp headers/Entity.h src/Entity.cpp src/MainMenu.cpp headers/MainMenu.h src/Application.cpp headers/Application.h headers/Exceptions.h)
 
 ###############################################################################
 
@@ -139,7 +139,10 @@ endif()
 ###############################################################################
 
 file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/Font.ttf DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 install (DIRECTORY assets DESTINATION bin)
+install (FILES Font.ttf DESTINATION bin)
 
 
 # copy binaries to "bin" folder; these are uploaded as artifacts on each release
