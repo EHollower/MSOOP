@@ -6,14 +6,10 @@
 
 /* constructors and destructors */
 WindowManager::WindowManager(): app(nullptr),
-bar1(GameTextures::getInstance()-> getBar1()), bar2(GameTextures::getInstance()-> getBar2()),
-tShape1(GameTextures::getInstance()-> getTShape1()), tShape2(GameTextures::getInstance()-> getTShape2()) {
-    start = {20.f, 100.f};
-    dimSprite = {25.f, 25.f};
-    scaleFactor = {2.5f, 2.5f};
-    padding = {15.f, 15.f};
-    smileyStart = {0.f, 18.f}; // first value does not matter
-
+smileyStart({0.f, 18.f}), start({20.f, 100.f}),
+dimSprite({25.f, 25.f}), scaleFactor({2.5f, 2.5f}),
+padding({15.f, 15.f}), bar1(GameTextures::getInstance()-> getBar1()), bar2(GameTextures::getInstance()-> getBar2()), tShape1(GameTextures::getInstance()-> getTShape1()), tShape2(GameTextures::getInstance()-> getTShape2())
+{
     /* corners */
     corners.resize(4);
     corners[0].setTexture(GameTextures::getInstance()-> getCorner1());
