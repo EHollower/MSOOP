@@ -8,11 +8,11 @@
 WindowManager::WindowManager(): app(nullptr),
 bar1(GameTextures::getInstance()-> getBar1()), bar2(GameTextures::getInstance()-> getBar2()),
 tShape1(GameTextures::getInstance()-> getTShape1()), tShape2(GameTextures::getInstance()-> getTShape2()) {
-    start = sf::Vector2f(20.f, 100.f);
-    dimSprite = sf::Vector2f(25.f, 25.f);
-    scaleFactor = sf::Vector2f(2.5f, 2.5f);
-    padding = sf::Vector2f(15.f, 15.f);
-    smileyStart = sf::Vector2f(0.f, 18.f); // first value does not matter
+    start = {20.f, 100.f};
+    dimSprite = {25.f, 25.f};
+    scaleFactor = {2.5f, 2.5f};
+    padding = {15.f, 15.f};
+    smileyStart = {0.f, 18.f}; // first value does not matter
 
     /* corners */
     corners.resize(4);
