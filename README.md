@@ -12,7 +12,7 @@ The goal is to find all the mines
 
 If you flag all the cells that a number can have (and press the cell) it will reveal all the cells not marked with a flag
 
-<img src="assets/mark1.png" alt="1"> <kbd>&#8594</kbd> <img src="assets/mark2.png" alt="2"> <kbd>&#8594</kbd> <img src="assets/mark3.png" alt="3">
+<img src="assets/mark1.png" alt="1"> <kbd>&#8594;</kbd> <img src="assets/mark2.png" alt="2"> <kbd>&#8594;</kbd> <img src="assets/mark3.png" alt="3">
 
 ## Resurse
 
