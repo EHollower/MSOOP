@@ -4,7 +4,7 @@
 
 #include "../headers/Game.h"
 
-Game::Game(int _row, int _col, int _nr) : row(_row), col(_col), nr(_nr) {
+Game::Game(int _row, int _col, int _nr, Entity* _menu) : Entity(), menu(_menu), row(_row), col(_col), nr(_nr) {
     board = std::make_shared<GameBoard>(row, col, nr);
     board-> scaleBoard(windowManager->getStart(), windowManager->getSpriteDim(),
                        windowManager-> getScaleFactor(), windowManager->getPadding());
@@ -59,8 +59,11 @@ void Game::update() {
                     if (smiley.containsSettings(windowManager->getMouse())) {
                         smiley.pressCellSettings();
                         smiley.setSmiley();
-                        draw(); sf::sleep(sf::milliseconds(5));
+                        draw();
+                        sf::sleep(sf::milliseconds(5));
                         smiley.pressCellSettings();
+                        windowManager->setWindowSize({800, 600});
+                        menu-> setCurrent(menu);
                         return;
                     }
 

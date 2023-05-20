@@ -115,21 +115,20 @@ void Application::update() {
                     if (idx == 1) {
                         windowManager->setWindowSize({400, 480});
                         windowManager->renderSize();
-                        this->setCurrent(new Game(9, 9, 10));
-                        return;
+                        setCurrent(new Game(9, 9, 10, this));
                     }
 
                     if (idx == 2) {
                         windowManager->setWindowSize({680, 760});
                         windowManager->renderSize();
-                        setCurrent(new Game(16, 16, 40));
+                        setCurrent(new Game(16, 16, 40, this));
                         return;
                     }
 
                     if (idx == 3) {
                         windowManager->setWindowSize({1240, 760});
                         windowManager->renderSize();
-                        setCurrent(new Game(30, 16, 99));
+                        setCurrent(new Game(30, 16, 99, this));
                         return;
                     }
                 }
