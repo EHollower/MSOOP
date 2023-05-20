@@ -89,7 +89,7 @@ void Cell::setSprite() {
         return;
     }
 
-    if (!COVERED and !MINE) {
+    if (!MINE) {
         sprite.setTextureRect(GameTextures::getInstance()-> getNeighbouringMines(nr_mines));
         return;
     }
