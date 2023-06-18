@@ -41,16 +41,16 @@
 - [x] STL
 - [x] cât mai multe `const`
 - [x] la sfârșit: commit separat cu adăugarea unei noi derivate fără a modifica restul codului
-- [ ] tag de `git`: de exemplu `v0.2`
+- [x] tag de `git`: de exemplu `v0.2`
 
 ## Tema 3
 
 #### Cerințe
 - [x] 2 șabloane de proiectare (design patterns)
-- [x] o funcție șablon (template) cu sens; minim 2 instanțieri
+- [] o funcție șablon (template) cu sens; minim 2 instanțieri
 - [ ] o clasă șablon cu sens; minim 2 instanțieri
 <!-- - [ ] o specializare pe funcție/clasă șablon -->
-- [ ] tag de `git`: de exemplu `v0.3` sau `v1.0`
+- [] tag de `git`: de exemplu `v0.3` sau `v1.0`
 
 ## Resurse
 
