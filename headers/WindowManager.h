@@ -15,8 +15,6 @@ private:
     /* constructors and destructors (private) */
     WindowManager();
     ~WindowManager();
-//    void create_window();
-//    void close_window();
 
     sf::RenderWindow *app;
     sf::Vector2f smileyStart;
@@ -28,6 +26,11 @@ public:
     void close_window();
     /* instance */
     static WindowManager* getInstance();
+
+    WindowManager(const WindowManager&) = delete; // delete copy constructor
+    WindowManager& operator=(const WindowManager&) = delete; // delete copy assignment
+    WindowManager(WindowManager&&) = delete; // delete move constructor
+    WindowManager& operator=(WindowManager&&) = delete; // delete move assignment
 
     /* utility */
     sf::RenderWindow* getWindow();
