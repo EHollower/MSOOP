@@ -30,7 +30,7 @@ WindowManager::~WindowManager() {
 
 void WindowManager::create_window() {
     if (app == nullptr) {
-        app = new sf::RenderWindow(sf::VideoMode({400, 480}), "Minesweeper", sf::Style::Titlebar | sf::Style::Close);
+        app = new sf::RenderWindow(sf::VideoMode({800, 600}), "Minesweeper", sf::Style::Titlebar | sf::Style::Close);
 
         sf::Image icon;
         icon.loadFromFile("assets/icon.png");
@@ -130,7 +130,7 @@ void WindowManager::draw_layout() {
     /* first set of bars */
     bar1.setPosition(0, 0);
     bar1.setScale(static_cast<float>(app-> getSize().x), 2.f);
-    app-> draw(bar1);
+    app->draw(bar1);
     bar1.setPosition(0, 83.f);
     app->draw(bar1);
     bar1.setPosition(0, static_cast<float>(app-> getSize().y) - 20.f);

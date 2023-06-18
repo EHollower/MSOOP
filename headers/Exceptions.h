@@ -17,17 +17,13 @@ public:
 };
 
 class load_img_error: public application_error {
+public:
     load_img_error(): application_error("Image cannot be loaded! Check Cmake\n") {}
 };
 
 class load_texture_error: public application_error {
+public:
     load_texture_error(): application_error("Texture cannot be loaded! Check Cmake\n") {}
 };
-
-class dynamic_cast_error : public application_error {
-public:
-    explicit dynamic_cast_error() : application_error("A casting error occurred\n") {}
-};
-
 
 #endif //OOP_EXCEPTIONS_H

@@ -26,7 +26,8 @@ GameTextures* GameTextures::getInstance() {
 
 sf::Texture& GameTextures::getTexture() {
     if (!texture_loaded) {
-        texture.loadFromFile("assets/sprites.png");
+        if (!texture.loadFromFile("assets/sprites.png"))
+            throw load_texture_error();
         texture_loaded = true;
     }
     return texture;
@@ -34,7 +35,8 @@ sf::Texture& GameTextures::getTexture() {
 
 sf::Texture& GameTextures::getBar1() {
     if (!bar1_load) {
-        bar1.loadFromFile("assets/border_hor.png");
+        if (!bar1.loadFromFile("assets/border_hor.png"))
+            throw load_img_error();
         bar1_load = true;
     }
     return bar1;
@@ -42,7 +44,8 @@ sf::Texture& GameTextures::getBar1() {
 
 sf::Texture& GameTextures::getBar2() {
     if (!bar2_load) {
-        bar2.loadFromFile("assets/border_vert.png");
+        if (!bar2.loadFromFile("assets/border_vert.png"))
+            throw load_img_error();
         bar2_load = true;
     }
     return bar2;
@@ -50,7 +53,8 @@ sf::Texture& GameTextures::getBar2() {
 
 sf::Texture& GameTextures::getCorner1() {
     if (!load_corners[0]) {
-        corners[0].loadFromFile("assets/corner_up_left.png");
+        if(!corners[0].loadFromFile("assets/corner_up_left.png"))
+            throw load_img_error();
         load_corners[0] = true;
     }
     return corners[0];
@@ -58,7 +62,8 @@ sf::Texture& GameTextures::getCorner1() {
 
 sf::Texture& GameTextures::getCorner2() {
     if (!load_corners[1]) {
-        corners[1].loadFromFile("assets/corner_up_right.png");
+        if(!corners[1].loadFromFile("assets/corner_up_right.png"))
+            throw load_img_error();
         load_corners[1] = true;
     }
     return corners[1];
@@ -66,7 +71,8 @@ sf::Texture& GameTextures::getCorner2() {
 
 sf::Texture& GameTextures::getCorner3() {
     if (!load_corners[2]) {
-        corners[2].loadFromFile("assets/corner_bottom_left.png");
+        if (!corners[2].loadFromFile("assets/corner_bottom_left.png"))
+            throw load_img_error();
         load_corners[2] = true;
     }
     return corners[2];
@@ -74,7 +80,8 @@ sf::Texture& GameTextures::getCorner3() {
 
 sf::Texture& GameTextures::getCorner4() {
     if (!load_corners[3]) {
-        corners[3].loadFromFile("assets/corner_bottom_right.png");
+        if (!corners[3].loadFromFile("assets/corner_bottom_right.png"))
+            throw load_img_error();
         load_corners[3] = true;
     }
     return corners[3];
@@ -82,7 +89,8 @@ sf::Texture& GameTextures::getCorner4() {
 
 sf::Texture& GameTextures::getTShape1() {
     if (!t1_load) {
-        t1Shape.loadFromFile("assets/t_left.png");
+        if(!t1Shape.loadFromFile("assets/t_left.png"))
+            throw load_img_error();
         t1_load = true;
     }
     return t1Shape;
@@ -90,7 +98,8 @@ sf::Texture& GameTextures::getTShape1() {
 
 sf::Texture& GameTextures::getTShape2() {
     if (!t2_load) {
-        t2Shape.loadFromFile("assets/t_right.png");
+        if(!t2Shape.loadFromFile("assets/t_right.png"))
+            throw load_img_error();
         t2_load = true;
     }
     return t2Shape;
@@ -98,7 +107,8 @@ sf::Texture& GameTextures::getTShape2() {
 
 sf::Font& GameTextures::getFont() {
     if (!font_load) {
-        font.loadFromFile("Font.ttf");
+        if (!font.loadFromFile("Font.ttf"))
+            throw load_font_error();
         font_load = true;
     }
     return font;

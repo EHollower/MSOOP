@@ -4,7 +4,7 @@
 
 #include "../headers/Game.h"
 
-Game::Game(int _row, int _col, int _nr, Entity* _menu) : Entity(), menu(_menu), row(_row), col(_col), nr(_nr) {
+Game::Game(int _row, int _col, int _nr) : Entity(), row(_row), col(_col), nr(_nr) {
     board = std::make_shared<GameBoard>(row, col, nr);
     board-> scaleBoard(windowManager->getStart(), windowManager->getSpriteDim(),
                        windowManager-> getScaleFactor(), windowManager->getPadding());
@@ -33,6 +33,7 @@ void Game::draw() {
 
 void Game::update() {
     sf::Event event{};
+    currInstance = shared_from_this();
     while (windowManager-> getWindow()-> pollEvent(event)) {
         switch(event.type) {
             case sf::Event::Closed: {
@@ -63,7 +64,7 @@ void Game::update() {
                         sf::sleep(sf::milliseconds(5));
                         smiley.pressCellSettings();
                         windowManager->setWindowSize({800, 600});
-                        menu-> setCurrent(menu);
+                        currInstance = std::make_shared<Application>();
                         return;
                     }
 

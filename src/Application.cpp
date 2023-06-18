@@ -40,12 +40,10 @@ void Application::setTextExplicit() {
         return;
     }
 
-
     difficulty[1].setString("Beginner");
     difficulty[2].setString("Intermediate");
     difficulty[3].setString("Expert");
 }
-
 
 void Application::clear() {
    for (auto& it : difficulty) {
@@ -82,6 +80,7 @@ void Application::draw() {
 
 void Application::update() {
     sf::Event event{};
+    currInstance = shared_from_this();
     while (windowManager-> getWindow()-> pollEvent(event)) {
         switch (event.type) {
             case sf::Event::Closed: {
@@ -115,20 +114,20 @@ void Application::update() {
                     if (idx == 1) {
                         windowManager->setWindowSize({400, 480});
                         windowManager->renderSize();
-                        setCurrent(new Game(9, 9, 10, this));
+                        currInstance = std::make_shared<Game>(9, 9, 10);
                     }
 
                     if (idx == 2) {
                         windowManager->setWindowSize({680, 760});
                         windowManager->renderSize();
-                        setCurrent(new Game(16, 16, 40, this));
+                        currInstance = std::make_shared<Game>(16, 16, 40);
                         return;
                     }
 
                     if (idx == 3) {
                         windowManager->setWindowSize({1240, 760});
                         windowManager->renderSize();
-                        setCurrent(new Game(30, 16, 99, this));
+                        currInstance = std::make_shared<Game>(30, 16, 99);
                         return;
                     }
                 }
