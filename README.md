@@ -18,7 +18,7 @@ You can keep track of your times in HighScore section
 
 You can enter a nickname of your choice (up to 20 characters) by pressing <kbd>Enter</kbd> and delete with <kbd>Backspace</kbd> (and saving it by pressing <kbd>Enter</kbd> again)
 
-You can use <kbd>W A S D</kbd> or <kbd> &#8593; &#8595; &#8592; &#8594;</kbd> to scroll the HighScore Board
+You can use <kbd>W A S D</kbd> or <kbd> &#8593; &#8595; &#8592; &#8594;</kbd> to scroll the HighScore Board (Exit using <kbd>Escape</kbd>)
 
 ## Resurse
 
