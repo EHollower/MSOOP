@@ -20,7 +20,7 @@ private:
     sf::Vector2f smileyStart;
     sf::Vector2f start, dimSprite, scaleFactor, padding;
     sf::Sprite bar1, bar2, tShape1, tShape2;
-    std::vector <sf::Sprite> corners;
+    std::vector <sf::Sprite> corners, numbers;
 public:
     void create_window();
     void close_window();
@@ -53,6 +53,7 @@ public:
 
     /* SFML */
     void draw_layout();
+    void draw_timer();
 
     /* operators */
     friend std::ostream& operator << (std::ostream& stream, const WindowManager& window);

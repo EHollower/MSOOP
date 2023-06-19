@@ -32,8 +32,8 @@
     - minim o funcție virtuală va fi **specifică temei** (e.g. nu simple citiri/afișări)
   - [x] apelarea constructorului din clasa de bază din constructori din derivate
   - [x] smart pointers
-  - [] `dynamic_cast`
-- [ ] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
+  - [x] `dynamic_cast`
+- [x] suprascris cc/op= pentru copieri/atribuiri corecte, copy and swap
 - [x] excepții
   - [x] ierarhie proprie cu baza `std::exception` sau derivată din `std::exception`; minim 2 clase pentru erori specifice
   - [x] utilizare cu sens: de exemplu, `throw` în constructor, `try`/`catch` în `main`
@@ -47,10 +47,10 @@
 
 #### Cerințe
 - [x] 2 șabloane de proiectare (design patterns)
-- [] o funcție șablon (template) cu sens; minim 2 instanțieri
-- [ ] o clasă șablon cu sens; minim 2 instanțieri
+- [x] o funcție șablon (template) cu sens; minim 2 instanțieri
+- [ ] o clasă șablon cu sens; minim 2 instanțieri (nu prea am ce clasa sablon sa fac, m-am gandit dar nu am gasit nimic ce ar avea sens)
 <!-- - [ ] o specializare pe funcție/clasă șablon -->
-- [] tag de `git`: de exemplu `v0.3` sau `v1.0`
+- [x] tag de `git`: de exemplu `v0.3` sau `v1.0`
 
 ## Resurse
 

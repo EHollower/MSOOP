@@ -17,7 +17,7 @@ private:
     const std::string PATH = "assets/sprites.png";
     bool texture_loaded = false, bar1_load = false, bar2_load = false, t1_load = false, t2_load = false, font_load = false;
     sf::Font font;
-    sf::IntRect mines[9];
+    sf::IntRect mines[9], numbers[15];
     sf::Texture texture, bar1, bar2, t1Shape, t2Shape;
     std::vector <bool> load_corners;
     std::vector <sf::Texture> corners;
@@ -60,6 +60,7 @@ public:
     static sf::IntRect& getWrongFlag();
     static sf::IntRect& getCoveredPRESS();
     sf::IntRect& getNeighbouringMines(const int& nr);
+    sf::IntRect& getNumber(const int& nr);
 };
 
 #endif //OOP_GAMETEXTURES_H

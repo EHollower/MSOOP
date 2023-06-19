@@ -13,10 +13,40 @@ Game::Game(int _row, int _col, int _nr) : Entity(), row(_row), col(_col), nr(_nr
 void Game::checkIfEnded() {
     if (!board-> isRunning() or board-> onlyMines()) {
         board-> reveal();
+        Timer::getInstance()-> stop();
         if (board-> status() == -1) smiley.setLoss();
-        else smiley.setWin();
+        else {
+            smiley.setWin();
+            switch(nr) {
+                case 10:
+                    pushHighScore("Beginner");
+                    break;
+                case 40:
+                    pushHighScore("Intermediate");
+                    break;
+                case 99:
+                    pushHighScore("Expert");
+                    break;
+            }
+        }
+        Timer::getInstance()-> reset();
     }
+}
 
+bool Game::gameStatus() const {
+    return !(!board-> isRunning() or board-> onlyMines());
+}
+
+int Game::Type() const {
+    switch(nr) {
+        case 10:
+            return 0;
+        case 40:
+            return 1;
+        case 99:
+            return 2;
+    }
+    return -1;
 }
 
 void Game::draw() {
@@ -26,9 +56,22 @@ void Game::draw() {
                        windowManager-> getScaleFactor(), windowManager->getPadding());
     windowManager->clear_window();
     windowManager->draw_layout();
+    windowManager->draw_timer();
     board-> drawBoard(*windowManager->getWindow());
     smiley.drawSmiley(*windowManager->getWindow());
     windowManager->renderView();
+}
+
+Game &Game::operator=(const Game &other) {
+    if (this != &other) {
+        this->board = other.board;
+        this->smiley = other.smiley;
+        this->view = other.view;
+        this->row = other.row;
+        this->col = other.col;
+        this->nr = other.nr;
+    }
+    return *this;
 }
 
 void Game::update() {
@@ -55,6 +98,7 @@ void Game::update() {
                         board = std::make_unique <GameBoard>(row, col, nr);
                         board-> scaleBoard(windowManager->getStart(), windowManager->getSpriteDim(),
                                            windowManager-> getScaleFactor(), windowManager->getPadding());
+                        Timer::getInstance()-> start();
                     }
 
                     if (smiley.containsSettings(windowManager->getMouse())) {
@@ -63,6 +107,7 @@ void Game::update() {
                         draw();
                         sf::sleep(sf::milliseconds(5));
                         smiley.pressCellSettings();
+                        smiley.setSmiley();
                         windowManager->setWindowSize({800, 600});
                         currInstance = std::make_shared<Application>();
                         return;

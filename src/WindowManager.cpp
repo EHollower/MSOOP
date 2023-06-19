@@ -3,6 +3,7 @@
 //
 
 #include "../headers/WindowManager.h"
+#include "../headers/Timer.h"
 
 /* constructors and destructors */
 WindowManager::WindowManager(): app(nullptr),
@@ -89,7 +90,6 @@ sf::Vector2i WindowManager::get_coord() {
     float cellY = start.y + static_cast<float>(j) * (dimSprite.y + padding.y);
     float cellWidth = dimSprite.x * scaleFactor.x;
     float cellHeight = dimSprite.y * scaleFactor.y;
-
     if (mousePos.x >= cellX && mousePos.x <= (cellX + cellWidth) &&
         mousePos.y >= cellY && mousePos.y <= (cellY + cellHeight)) {
         return {i, j};
@@ -99,7 +99,7 @@ sf::Vector2i WindowManager::get_coord() {
 }
 
 void WindowManager::renderSize() {
-    smileyStart.x = 0.35f * static_cast<float>(app-> getSize().x);
+    smileyStart.x = 20.f;
 }
 
 sf::Vector2i WindowManager::getMouse() const {
@@ -162,6 +162,51 @@ void WindowManager::draw_layout() {
     corners[3].setPosition(static_cast<float>(app-> getSize().x) - 20.f,
                            static_cast<float>(app-> getSize().y) - 20.f);
     app-> draw(corners[3]);
+}
+
+void WindowManager::draw_timer() {
+    numbers.clear();
+    numbers.emplace_back(GameTextures::getInstance()-> getTexture());
+    numbers[0].setTextureRect(GameTextures::getInstance()->getNumber(13));
+    numbers[0].setPosition(static_cast<float>(app->getSize().x) - 30.f, 20.f);
+    numbers[0].setScale(2.5f, 2.5f);
+
+    if (Timer::getInstance()-> isR()) {
+        long long seconds = Timer::getInstance()->getDuration<std::chrono::seconds>().count();
+         do {
+            sf::Vector2f last = numbers.back().getPosition();
+            numbers.emplace_back(GameTextures::getInstance()->getTexture());
+            if (seconds % 10 == 0) {
+                numbers.back().setTextureRect(GameTextures::getInstance()->getNumber(10));
+                numbers.back().setPosition(last.x - 30.f, last.y);
+                numbers.back().setScale(2.5f, 2.5f);
+                seconds /= 10;
+                continue;
+            }
+            numbers.back().setTextureRect(GameTextures::getInstance()->getNumber(static_cast <int>(seconds % 10)));
+            numbers.back().setPosition(last.x - 30.f, last.y);
+            numbers.back().setScale(2.5f, 2.5f);
+            seconds /= 10;
+        } while (seconds > 0);
+    } else {
+        for (int i = 0; i < 3; ++i) {
+            sf::Vector2f last = numbers.back().getPosition();
+            numbers.emplace_back(GameTextures::getInstance()->getTexture());
+            numbers.back().setTextureRect(GameTextures::getInstance()->getNumber(11));
+            numbers.back().setPosition(last.x - 30.f, last.y);
+            numbers.back().setScale(2.5f, 2.5f);
+        }
+    }
+
+    sf::Vector2f last = numbers.back().getPosition();
+    numbers.emplace_back(GameTextures::getInstance()->getTexture());
+    numbers.back().setTextureRect(GameTextures::getInstance()->getNumber(0));
+    numbers.back().setPosition(last.x - 9.f, last.y);
+    numbers.back().setScale(2.5f, 2.5f);
+
+    for (auto& it : numbers) {
+        app->draw(it);
+    }
 }
 
 std::ostream& operator << (std::ostream& stream, const WindowManager& window) {

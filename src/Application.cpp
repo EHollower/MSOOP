@@ -3,9 +3,11 @@
 //
 
 #include "../headers/Application.h"
+#include "../headers/HighScore.h"
+#include "../headers/Timer.h"
 
-Application::Application(): Entity(), STEXT(false), idx(0) {
-    difficulty.resize(4);
+Application::Application(): Entity(), STEXT(false), idx(1) {
+    difficulty.resize(5);
     /* MineSweeper! */
     for (auto& it : difficulty) {
         it.setFont(GameTextures::getInstance()-> getFont());
@@ -29,6 +31,11 @@ Application::Application(): Entity(), STEXT(false), idx(0) {
     difficulty[3].setString("Expert");
     difficulty[3].setFillColor(sf::Color::White);
     difficulty[3].setPosition(160, 160);
+
+    /* HighScore */
+    difficulty[4].setString("HighScore");
+    difficulty[4].setFillColor(sf::Color::White);
+    difficulty[4].setPosition(160, 190);
 }
 
 void Application::setTextExplicit() {
@@ -37,12 +44,14 @@ void Application::setTextExplicit() {
         difficulty[1].setString("10x10 and 9 Mines");
         difficulty[2].setString("16x16 and 40 Mines");
         difficulty[3].setString("30x16 and 99 Mines");
+        difficulty[4].setString("HighScore");
         return;
     }
 
     difficulty[1].setString("Beginner");
     difficulty[2].setString("Intermediate");
     difficulty[3].setString("Expert");
+    difficulty[4].setString("HighScore");
 }
 
 void Application::clear() {
@@ -115,12 +124,15 @@ void Application::update() {
                         windowManager->setWindowSize({400, 480});
                         windowManager->renderSize();
                         currInstance = std::make_shared<Game>(9, 9, 10);
+                        Timer::getInstance()-> start();
+                        return;
                     }
 
                     if (idx == 2) {
                         windowManager->setWindowSize({680, 760});
                         windowManager->renderSize();
                         currInstance = std::make_shared<Game>(16, 16, 40);
+                        Timer::getInstance()-> start();
                         return;
                     }
 
@@ -128,6 +140,12 @@ void Application::update() {
                         windowManager->setWindowSize({1240, 760});
                         windowManager->renderSize();
                         currInstance = std::make_shared<Game>(30, 16, 99);
+                        Timer::getInstance()->start();
+                        return;
+                    }
+
+                    if (idx == 4) {
+                        currInstance = std::make_shared<HighScore>();
                         return;
                     }
                 }

@@ -20,9 +20,12 @@ private:
     int row, col, nr;
 public:
     Game(int _row, int _col, int _nr);
+    Game& operator=(const Game& other);
     void draw() override;
     void update() override;
     void checkIfEnded();
+    int Type() const;
+    bool gameStatus() const;
 };
 
 #endif //OOP_GAME_H

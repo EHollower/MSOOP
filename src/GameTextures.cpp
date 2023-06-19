@@ -12,6 +12,15 @@ GameTextures::GameTextures() { // Initialize the sprites configurations
         mines[i].left += 17;
     }
 
+    numbers[0] = sf::IntRect(0, 3, 6, 26);
+    numbers[1] = sf::IntRect(6, 3, 15, 26);
+    for (int i = 2; i < 12; ++i) {
+        numbers[i] = numbers[i - 1];
+        numbers[i].left += 15;
+    }
+    numbers[12] = sf::IntRect(numbers[11].left + 15, 3, 8, 26);
+    numbers[13] = sf::IntRect(numbers[12].left + 8, 3, 6, 26);
+
     load_corners.resize(4);
     corners.resize(4);
 }
@@ -181,4 +190,8 @@ sf::IntRect& GameTextures::getWrongFlag() {
 
 sf::IntRect& GameTextures::getNeighbouringMines(const int& nr) {
     return mines[nr];
+}
+
+sf::IntRect& GameTextures::getNumber(const int& nr) {
+    return numbers[nr];
 }
