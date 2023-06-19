@@ -4,6 +4,7 @@
 
 #include "../headers/HighScore.h"
 #include "../headers/Application.h"
+#include "../headers/EntityFactory.h"
 
 HighScore::HighScore(): fin("highscore.txt"),  idx(0) {
     std::string Name, GameType, FinalTime;
@@ -68,7 +69,7 @@ void HighScore::update() {
                 }
 
                 if (event.key.code == sf::Keyboard::Escape) {
-                    currInstance = std::make_shared<Application>();
+                    currInstance = FactoryClass<Application>::createApp();
                     return;
                 }
 

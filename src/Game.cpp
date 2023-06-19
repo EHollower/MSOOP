@@ -3,6 +3,7 @@
 //
 
 #include "../headers/Game.h"
+#include "../headers/EntityFactory.h"
 
 Game::Game(int _row, int _col, int _nr) : Entity(), row(_row), col(_col), nr(_nr) {
     board = std::make_shared<GameBoard>(row, col, nr);
@@ -109,7 +110,7 @@ void Game::update() {
                         smiley.pressCellSettings();
                         smiley.setSmiley();
                         windowManager->setWindowSize({800, 600});
-                        currInstance = std::make_shared<Application>();
+                        currInstance = FactoryClass<Application>::createApp();
                         return;
                     }
 

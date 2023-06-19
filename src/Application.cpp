@@ -4,7 +4,7 @@
 
 #include "../headers/Application.h"
 #include "../headers/HighScore.h"
-#include "../headers/Timer.h"
+#include "../headers/EntityFactory.h"
 
 Application::Application(): Entity(), STEXT(false), idx(1) {
     difficulty.resize(5);
@@ -123,7 +123,7 @@ void Application::update() {
                     if (idx == 1) {
                         windowManager->setWindowSize({400, 480});
                         windowManager->renderSize();
-                        currInstance = std::make_shared<Game>(9, 9, 10);
+                        currInstance = FactoryClass<Game>::createGameType1();
                         Timer::getInstance()-> start();
                         return;
                     }
@@ -131,7 +131,7 @@ void Application::update() {
                     if (idx == 2) {
                         windowManager->setWindowSize({680, 760});
                         windowManager->renderSize();
-                        currInstance = std::make_shared<Game>(16, 16, 40);
+                        currInstance = FactoryClass<Game>::createGameType2();
                         Timer::getInstance()-> start();
                         return;
                     }
@@ -139,13 +139,13 @@ void Application::update() {
                     if (idx == 3) {
                         windowManager->setWindowSize({1240, 760});
                         windowManager->renderSize();
-                        currInstance = std::make_shared<Game>(30, 16, 99);
+                        currInstance = FactoryClass<Game>::createGameType3();
                         Timer::getInstance()->start();
                         return;
                     }
 
                     if (idx == 4) {
-                        currInstance = std::make_shared<HighScore>();
+                        currInstance = FactoryClass<HighScore>::createHighScore();
                         return;
                     }
                 }
