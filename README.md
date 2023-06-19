@@ -14,6 +14,12 @@ If you flag all the cells that a number can have (and press the cell) it will re
 
 <img src="assets/mark1.png" alt="1"> <kbd>&#8594;</kbd> <img src="assets/mark2.png" alt="2"> <kbd>&#8594;</kbd> <img src="assets/mark3.png" alt="3">
 
+You can keep track of your times in HighScore section
+
+You can enter a nickname of your choice (up to 20 characters) by pressing <kbd>Enter</kbd> and delete with <kbd>Backspace</kbd> (and saving it by pressing <kbd>Enter</kbd> again)
+
+You can use <kbd>W A S D</kbd> or <kbd> &#8593; &#8595; &#8592; &#8594;</kbd> to scroll the HighScore Board
+
 ## Resurse
 
 - [SFML](https://github.com/SFML/SFML/tree/aa82ea132b9296a31922772027ad5d14c1fa381b) (Zlib)

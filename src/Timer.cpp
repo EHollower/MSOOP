@@ -4,10 +4,8 @@
 
 #include "../headers/Timer.h"
 
-Timer::Timer(): isRunning(false) {
-    startTime = std::chrono::high_resolution_clock::time_point();
-    endTime = std::chrono::high_resolution_clock::time_point();
-}
+Timer::Timer(): startTime(std::chrono::high_resolution_clock::time_point()), endTime(std::chrono::high_resolution_clock::time_point()),
+isRunning(false) {}
 
 void Timer::start() {
     isRunning = true;
