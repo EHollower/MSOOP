@@ -18,6 +18,7 @@ private:
     Smiley smiley;
     sf::View view;
     int row, col, nr;
+    bool pushed;
 public:
     Game(int _row, int _col, int _nr);
     Game& operator=(const Game& other);

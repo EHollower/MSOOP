@@ -5,7 +5,7 @@
 #include "../headers/Game.h"
 #include "../headers/MenuFactory.h"
 
-Game::Game(int _row, int _col, int _nr) : Entity(), row(_row), col(_col), nr(_nr) {
+Game::Game(int _row, int _col, int _nr) : Entity(), row(_row), col(_col), nr(_nr), pushed(false) {
     board = std::make_shared<GameBoard>(row, col, nr);
     board-> scaleBoard(windowManager->getStart(), windowManager->getSpriteDim(),
                        windowManager-> getScaleFactor(), windowManager->getPadding());
@@ -18,19 +18,21 @@ void Game::checkIfEnded() {
         if (board-> status() == -1) smiley.setLoss();
         else {
             smiley.setWin();
-            switch(nr) {
-                case 10:
-                    pushHighScore("Beginner");
-                    break;
-                case 40:
-                    pushHighScore("Intermediate");
-                    break;
-                case 99:
-                    pushHighScore("Expert");
-                    break;
+            if (!pushed) {
+                pushed = true;
+                switch (nr) {
+                    case 10:
+                        pushHighScore("Beginner");
+                        break;
+                    case 40:
+                        pushHighScore("Intermediate");
+                        break;
+                    case 99:
+                        pushHighScore("Expert");
+                        break;
+                }
             }
         }
-        Timer::getInstance()-> reset();
     }
 }
 

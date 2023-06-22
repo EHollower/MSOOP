@@ -200,8 +200,7 @@ bool GameBoard::onlyMines() {
             nr += board[i][j].isCovered();
 
     if (nr == nr_mines) {
-        endgame = true;
-        win = 1;
+        endgame = true; win = 1;
         for (int i = 0; i < rows; ++i)
             for (int j = 0; j < columns; ++j)
                 if (board[i][j].isCovered() and !board[i][j].isFlag()) {
