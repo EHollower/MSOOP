@@ -10,7 +10,7 @@ std::string Entity::playerName = "DEFAULT";
 
 Entity::Entity(): curr(nullptr) {
     windowManager = WindowManager::getInstance();
-    games.resize(3), times.resize(3);
+    games.resize(3), times.resize(3), isRunning.resize(3);
 }
 
 std::shared_ptr<Entity> Entity::getInstance() const {
@@ -58,19 +58,25 @@ void Entity::processEvents() {
         if (std::shared_ptr <Game> game = std::dynamic_pointer_cast<Game>(curr)) {
             if (games[game->Type()] == nullptr) {
                 if (game->gameStatus()) {
-                    times[game->Type()] = Timer::getInstance()->getStart();
+                    times[game->Type()] = Timer::getInstance()->getDuration<std::chrono::seconds>();
                     games[game->Type()] = game;
+                    isRunning[game->Type()] = Timer::getInstance()->isR();
                 }
-                else games[game->Type()] = nullptr, times[game->Type()] = std::chrono::high_resolution_clock::time_point();
+                else games[game->Type()] = nullptr, isRunning[game->Type()] = false, times[game->Type()] = std::chrono::seconds::zero();
             } else if (curr != games[game->Type()]) {
                 std::shared_ptr <Game> tmp = std::dynamic_pointer_cast<Game>(games[game->Type()]);
                 if (tmp->gameStatus()) {
                     curr = tmp;
                     Timer::getInstance()->reset();
-                    Timer::getInstance()->start();
-                    Timer::getInstance()->setStart(times[game->Type()]);
+                    if (isRunning[game->Type()]) {
+                        Timer::getInstance()->start();
+                    }
+                    Timer::getInstance()->setStart(std::chrono::high_resolution_clock::now() - times[game->Type()]);
                 }
-                games[game->Type()] = nullptr, times[game->Type()] = std::chrono::high_resolution_clock::time_point();
+                games[game->Type()] = nullptr, isRunning[game->Type()] = false, times[game->Type()] = std::chrono::seconds::zero();
+            } else {
+                times[game->Type()] = Timer::getInstance()->getDuration<std::chrono::seconds>();
+                isRunning[game->Type()] = Timer::getInstance()->isR();
             }
         }
         curr-> update();

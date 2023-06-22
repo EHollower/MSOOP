@@ -4,9 +4,10 @@
 
 #include "../headers/Application.h"
 #include "../headers/HighScore.h"
-#include "../headers/EntityFactory.h"
+#include "../headers/MenuFactory.h"
 
 Application::Application(): Entity(), STEXT(false), idx(1) {
+    key.resize(32);
     difficulty.resize(5);
     /* MineSweeper! */
     for (auto& it : difficulty) {
@@ -57,7 +58,7 @@ void Application::setTextExplicit() {
 void Application::clear() {
    for (auto& it : difficulty) {
        if (it.getString()[0] == '?') {
-           it.setString(it.getString().substring(1));
+           it.setString(it.getString().substring(2));
        }
    }
 }
@@ -96,59 +97,59 @@ void Application::update() {
                 windowManager->getWindow()->close();
                 break;
             }
-            case sf::Event::KeyPressed:
+            case sf::Event::KeyReleased:
                 if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W) {
                     clear();
                     inc();
                     click(difficulty[idx]);
+                    while (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) or sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {}
+                    break;
                 }
 
                 if (event.key.code == sf::Keyboard::Down || event.key.code == sf::Keyboard::S) {
                     clear();
                     dec();
                     click(difficulty[idx]);
+                    while (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) or sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {}
+                    break;
                 }
 
                 if (event.key.code == sf::Keyboard::Left  || event.key.code == sf::Keyboard::A ||
                     event.key.code == sf::Keyboard::Right || event.key.code == sf::Keyboard::B) {
-                    if (idx == 0) {
-                        inc();
-                    }
                     setTextExplicit();
                     clear();
                     click(difficulty[idx]);
+                    break;
                 }
 
                 if (event.key.code == sf::Keyboard::Enter || event.key.code == sf::Keyboard::Space) {
                     if (idx == 1) {
                         windowManager->setWindowSize({400, 480});
                         windowManager->renderSize();
-                        currInstance = FactoryClass<Game>::createGameType1();
-                        Timer::getInstance()-> start();
-                        return;
+                        currInstance = MenuFactory<Game>::createGameType1();
+                        break;
                     }
 
                     if (idx == 2) {
                         windowManager->setWindowSize({680, 760});
                         windowManager->renderSize();
-                        currInstance = FactoryClass<Game>::createGameType2();
-                        Timer::getInstance()-> start();
-                        return;
+                        currInstance = MenuFactory<Game>::createGameType2();
+                        break;
                     }
 
                     if (idx == 3) {
                         windowManager->setWindowSize({1240, 760});
                         windowManager->renderSize();
-                        currInstance = FactoryClass<Game>::createGameType3();
-                        Timer::getInstance()->start();
-                        return;
+                        currInstance = MenuFactory<Game>::createGameType3();
+                        break;
                     }
 
                     if (idx == 4) {
-                        currInstance = FactoryClass<HighScore>::createHighScore();
-                        return;
+                        currInstance = MenuFactory<HighScore>::createHighScore();
+                        break;
                     }
                 }
+                break;
             default:
                 break;
         }

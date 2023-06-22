@@ -4,7 +4,7 @@
 
 #include "../headers/HighScore.h"
 #include "../headers/Application.h"
-#include "../headers/EntityFactory.h"
+#include "../headers/MenuFactory.h"
 
 HighScore::HighScore(): fin("highscore.txt"),  idx(0) {
     std::string Name, GameType, FinalTime;
@@ -59,7 +59,7 @@ void HighScore::update() {
                 windowManager->getWindow()->close();
                 break;
             }
-            case sf::Event::KeyPressed:
+            case sf::Event::KeyReleased:
                 if (event.key.code == sf::Keyboard::Up || event.key.code == sf::Keyboard::W) {
                     if (idx != -1) inc();
                 }
@@ -69,7 +69,7 @@ void HighScore::update() {
                 }
 
                 if (event.key.code == sf::Keyboard::Escape) {
-                    currInstance = FactoryClass<Application>::createApp();
+                    currInstance = MenuFactory<Application>::createApp();
                     return;
                 }
 
@@ -95,6 +95,7 @@ void HighScore::update() {
                     }
                     NameInput.setString("Enter Nickname:" + playerName);
                 }
+                break;
             default:
                 break;
         }

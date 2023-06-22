@@ -12,6 +12,7 @@
 class Application: public Entity {
 private:
     std::vector <sf::Text> difficulty;
+    std::vector <char> key;
     bool STEXT;
     int idx;
 public:

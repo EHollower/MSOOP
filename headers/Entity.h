@@ -22,7 +22,8 @@ protected:
 private:
     std::shared_ptr <Entity> curr;
     std::vector <std::shared_ptr <Entity>> games;
-    std::vector <std::chrono::time_point <std::chrono::high_resolution_clock>> times;
+    std::vector <std::chrono::seconds> times;
+    std::vector <bool> isRunning;
 public:
     Entity();
     Entity& operator = (const Entity& other) = default;

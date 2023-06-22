@@ -3,7 +3,7 @@
 //
 
 #include "../headers/Game.h"
-#include "../headers/EntityFactory.h"
+#include "../headers/MenuFactory.h"
 
 Game::Game(int _row, int _col, int _nr) : Entity(), row(_row), col(_col), nr(_nr) {
     board = std::make_shared<GameBoard>(row, col, nr);
@@ -88,6 +88,7 @@ void Game::update() {
                 if (event.mouseButton.button == sf::Mouse::Right) {
                     if (board->status() == 0)
                         board->putFlag(windowManager->get_coord().x, windowManager->get_coord().y);
+                    break;
                 }
 
                 if (event.mouseButton.button == sf::Mouse::Left) {
@@ -99,7 +100,7 @@ void Game::update() {
                         board = std::make_unique <GameBoard>(row, col, nr);
                         board-> scaleBoard(windowManager->getStart(), windowManager->getSpriteDim(),
                                            windowManager-> getScaleFactor(), windowManager->getPadding());
-                        Timer::getInstance()-> start();
+                        break;
                     }
 
                     if (smiley.containsSettings(windowManager->getMouse())) {
@@ -109,9 +110,10 @@ void Game::update() {
                         sf::sleep(sf::milliseconds(5));
                         smiley.pressCellSettings();
                         smiley.setSmiley();
+                        Timer::getInstance()->stop();
                         windowManager->setWindowSize({800, 600});
-                        currInstance = FactoryClass<Application>::createApp();
-                        return;
+                        currInstance = MenuFactory<Application>::createApp();
+                        break;
                     }
 
                     while (sf::Mouse::isButtonPressed(sf::Mouse::Left) and board->status() == 0) {
@@ -122,6 +124,7 @@ void Game::update() {
                         board->pressCells(windowManager->get_coord().x, windowManager->get_coord().y);
                         draw();
                         smiley.setSmiley();
+                        break;
                     }
                 }
                 break;

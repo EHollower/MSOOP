@@ -2,14 +2,14 @@
 // Created by mihne on 6/19/2023.
 //
 
-#ifndef OOP_ENTITYFACTORY_H
-#define OOP_ENTITYFACTORY_H
+#ifndef OOP_MENUFACTORY_H
+#define OOP_MENUFACTORY_H
 
 #include <memory>
 #pragma once
 
 template <typename T>
-class FactoryClass {
+class MenuFactory {
 public:
     static std::shared_ptr<T> createApp() {
         return std::make_shared<T>();
@@ -28,4 +28,4 @@ public:
     }
 };
 
-#endif //OOP_ENTITYFACTORY_H
+#endif //OOP_MENUFACTORY_H

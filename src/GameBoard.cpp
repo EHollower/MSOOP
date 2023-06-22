@@ -3,6 +3,7 @@
 //
 
 #include "../headers/GameBoard.h"
+#include "../headers/Timer.h"
 
 std::pair <int, int> GameBoard::gen_mine(std::mt19937& game_seed) const {
     // generate random position on the board
@@ -73,6 +74,8 @@ void GameBoard::touch(const int& row, const int& col) { // function for interfac
     if (std::make_pair(first_x, first_y) == std::make_pair(-1, -1)) {
         first_x = row, first_y = col;
         gen_game();
+        if (!Timer::getInstance()-> isR())
+            Timer::getInstance()-> start();
     }
 
     if (!board[row][col].isCovered()) {
@@ -149,8 +152,11 @@ void GameBoard::reveal() {
 }
 
 void GameBoard::putFlag(const int& row, const int& col) {
-    if (check_border(row, col))
+    if (check_border(row, col)) {
+        if (!Timer::getInstance()-> isR())
+            Timer::getInstance()-> start();
         board[row][col].flagCell();
+    }
 }
 
 bool GameBoard::isRunning() const {
