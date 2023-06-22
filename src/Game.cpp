@@ -35,7 +35,7 @@ void Game::checkIfEnded() {
 }
 
 bool Game::gameStatus() const {
-    return !(!board-> isRunning() or board-> onlyMines());
+    return board->status() == 0;
 }
 
 int Game::Type() const {
@@ -88,7 +88,6 @@ void Game::update() {
                 if (event.mouseButton.button == sf::Mouse::Right) {
                     if (board->status() == 0)
                         board->putFlag(windowManager->get_coord().x, windowManager->get_coord().y);
-                    break;
                 }
 
                 if (event.mouseButton.button == sf::Mouse::Left) {
@@ -100,7 +99,7 @@ void Game::update() {
                         board = std::make_unique <GameBoard>(row, col, nr);
                         board-> scaleBoard(windowManager->getStart(), windowManager->getSpriteDim(),
                                            windowManager-> getScaleFactor(), windowManager->getPadding());
-                        break;
+                        Timer::getInstance()->reset();
                     }
 
                     if (smiley.containsSettings(windowManager->getMouse())) {
@@ -113,7 +112,6 @@ void Game::update() {
                         Timer::getInstance()->stop();
                         windowManager->setWindowSize({800, 600});
                         currInstance = MenuFactory<Application>::createApp();
-                        break;
                     }
 
                     while (sf::Mouse::isButtonPressed(sf::Mouse::Left) and board->status() == 0) {
@@ -124,7 +122,6 @@ void Game::update() {
                         board->pressCells(windowManager->get_coord().x, windowManager->get_coord().y);
                         draw();
                         smiley.setSmiley();
-                        break;
                     }
                 }
                 break;

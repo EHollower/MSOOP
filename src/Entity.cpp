@@ -75,8 +75,14 @@ void Entity::processEvents() {
                 }
                 games[game->Type()] = nullptr, isRunning[game->Type()] = false, times[game->Type()] = std::chrono::seconds::zero();
             } else {
-                times[game->Type()] = Timer::getInstance()->getDuration<std::chrono::seconds>();
-                isRunning[game->Type()] = Timer::getInstance()->isR();
+                if (game->gameStatus()) {
+                    times[game->Type()] = Timer::getInstance()->getDuration<std::chrono::seconds>();
+                    games[game->Type()] = game;
+                    isRunning[game->Type()] = Timer::getInstance()->isR();
+                }
+                else {
+                    games[game->Type()] = nullptr, isRunning[game->Type()] = false, times[game->Type()] = std::chrono::seconds::zero();
+                }
             }
         }
         curr-> update();
